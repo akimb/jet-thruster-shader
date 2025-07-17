@@ -1,44 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwj5iiwsx4nys"]
+[gd_scene load_steps=7 format=3 uid="uid://dwj5iiwsx4nys"]
 
-[ext_resource type="Shader" uid="uid://dl1glai0orjyp" path="res://thruster.gdshader" id="1_5hfv0"]
+[ext_resource type="Material" uid="uid://bdcwd0g7mnqit" path="res://booster_material.tres" id="1_5hfv0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5hfv0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_0bhed"]
+sky_material = SubResource("ProceduralSkyMaterial_5hfv0")
+
+[sub_resource type="Environment" id="Environment_m0rpm"]
+background_mode = 2
+sky = SubResource("Sky_0bhed")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="Curve" id="Curve_0bhed"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_5hfv0"]
-offsets = PackedFloat32Array(0.154762, 0.714286)
-colors = PackedColorArray(0.858121, 0.00148743, 0.970587, 1, 0, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0bhed"]
-noise_type = 3
-frequency = 0.025
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m0rpm"]
-seamless = true
-color_ramp = SubResource("Gradient_5hfv0")
-noise = SubResource("FastNoiseLite_0bhed")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m0rpm"]
-render_priority = 0
-shader = ExtResource("1_5hfv0")
-shader_parameter/main_color = Color(0, 1, 1, 1)
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_m0rpm")
-shader_parameter/emission = Color(0.856968, 0.922955, 1, 1)
-shader_parameter/emission_energy = 20.0
-shader_parameter/scroll_speed = 5.0
-shader_parameter/alpha_threshold = 0.035
-shader_parameter/use_threshold = true
-shader_parameter/invert_boost_direction = true
-
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_c6xj6"]
-material = SubResource("ShaderMaterial_m0rpm")
+material = ExtResource("1_5hfv0")
 sections = 50
 cap_top = false
 cap_bottom = false
 curve = SubResource("Curve_0bhed")
 
 [node name="Demo" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m0rpm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)

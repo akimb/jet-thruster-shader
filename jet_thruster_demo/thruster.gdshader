@@ -14,13 +14,13 @@ uniform bool invert_boost_direction = false;
 void fragment() {
 	vec2 moving_uv = UV;
 	vec4 noise = texture(noise_texture, moving_uv);
-	
+
 	if (invert_boost_direction) {
 		moving_uv.y += TIME * scroll_speed;
 	} else{
 		moving_uv.y -= TIME * scroll_speed;
 	}
-	
+
 	float noise_value = texture(noise_texture, moving_uv).r;
 
 	ALBEDO = main_color.rgb;
